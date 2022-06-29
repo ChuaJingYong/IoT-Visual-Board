@@ -1,0 +1,167 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./bundle.js"defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+    
+    <title>IoT Visual Board</title>
+</head>
+<body>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="control_panel">
+        <h1>Toggle Switch</h1>
+
+            <label for="switch1" class="switch">
+                <input type="checkbox" id="switch1">
+                    <span class="slider"></span>
+            </label>
+
+            <!-- <label for="switch2" class="switch">
+            <input type="checkbox" id="switch2">
+                <span class="slider"></span>
+            </label>
+            
+            <label for="switch3" class="switch">
+            <input type="checkbox" id="switch3">
+                <span class="slider"></span>
+            </label> -->
+    </div>
+    
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+    
+    <div class="getData">
+        <h1>Choose sensor data</h1>
+        <label for="selCategory1"  >Category</label>
+        <select name="selCategory1" id="selCategory1">
+            <option selected disabled>select category</option>
+        </select>
+
+        <label for="selSensor1">Sensor</label>
+        <select name="selSensor1" id="selSensor1">
+            <option selected disabled>select sensor</option>
+        </select>
+
+        <label for="selDate1">Date</label>
+        <select name="selDate1" id="selDate1">
+            <option selected disabled>select date</option>
+        </select>
+
+        <label for="selData1">Data type</label>
+        <select name="selData1" id="selData1">
+            <option selected disabled>select data</option>
+        </select>
+
+        <button id="btnGetData1">Get Data</button>
+        <br><br>
+    </div>
+
+    <br><br><br><br><br><br> <br><br><br>
+    
+    <div class="selectOptions">
+        <button id="btnAdd">Add</button>
+        <select name="selectOptions" id="selectOptions">
+            <option selected disabled>Select device</option>
+        </select>
+        <br>
+        <br>
+    </div>
+    
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+    <div class="connectAPI">
+        <label for="URLInput"></label>
+        <input type="text" id="URLInput" size="40">
+        <button id="btnURLInput">Add</button>
+
+        <br><br>
+
+        <label for="DatabaseInput"></label>
+        <input type="text" id="databaseInput" size="20">
+        <select name="APIConnectionOptions" id="APIConnectionOptions">
+            <option selected disabled>Select device</option>
+        </select>
+        
+        <button id="btnDatabaseInput">Add</button>
+
+        <p>API connection address: </p>
+        <p id="APIAddress"></p>
+
+        <button id="connectTimer">Connect to API</button>
+        <button id="disconnectTimer">Disconnect to API</button>
+
+        <br><br>
+
+        <button id="resetAPI">Reset API connection</button>
+    </div>
+
+    <div class ="chart-container"  style=" position: relative; width: 550px; height: 100px">
+        <canvas id="myChart"></canvas>
+        <label for="startDate" style="padding:2px; font-family:sans-serif; font-size:14px; color: rgb(255, 0, 0,0.8);">Start Date</label>
+        <input type="date" id="startDate" >
+        <br>
+        
+        <label for="endDate" style="padding:4px; font-family:sans-serif; font-size:14px; color: rgba(22, 155, 22, 0.8)">End Date </label>
+        <input type="date" id="endDate" >
+        <br>
+
+        <label for="startTime" style="padding:2px; font-family:sans-serif; font-size:14px; color: rgb(255, 0, 0,0.8);">Start Time</label>
+        <input type="time" id="startTime" step="1">
+        <br>
+        <label for="endTime" style="padding:4px; font-family:sans-serif; font-size:14px; color: rgba(22, 155, 22, 0.8)">End Time </label>
+        <input type="time" id="endTime" step="1">
+        <br>
+        <br>
+        <!-- <button onclick="fetchData()">Fetch Temperature readings</button>
+        <button onclick="fetchJSON()">Fetch JSON data</button> -->
+        <button onclick="toggleTooltip()" id="toggleTooltip" value ="NO">Toggle Tooltip</button>
+        <!-- <input type="button" id="toggleTooltip" value="NO" onclick="toggleTooltip();"> -->
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+    <div class ="average-type-chart-container"  style=" position: relative; width: 550px; height: 200px">
+        <div style ="padding:4px; font-family:sans-serif; font-size:18px; ">Daily Average Data</div>
+        <span class="avgTemp">averageTemp</span>
+        <canvas id="avgChart"></canvas>
+        <!-- <label for="startDate" style="padding:2px; font-family:sans-serif; font-size:14px; color: rgb(255, 0, 0,0.8);">Start Date</label>
+        <input onchange="filterDataByDate()" type="date" id="startDate" value="2022-03-06">
+        <br>
+        <label for="endDate" style="padding:4px; font-family:sans-serif; font-size:14px; color: rgba(22, 155, 22, 0.8)">End Date </label>
+        <input onchange="filterDataByDate()" type="date" id="endDate" value="2022-03-10">
+        <br>
+
+        <label for="startTime" style="padding:2px; font-family:sans-serif; font-size:14px; color: rgb(255, 0, 0,0.8);">Start Time</label>
+        <input onchange="filterDataByTime()" type="time" id="startTime" value="06:00:20">
+        <br>
+        <label for="endTime" style="padding:4px; font-family:sans-serif; font-size:14px; color: rgba(22, 155, 22, 0.8)">End Time </label>
+        <input onchange="filterDataByTime()" type="time" id="endTime" value="04:00:05">
+        <br>
+        <br>
+        <button onclick="fetchData()">Fetch Temperature readings</button>
+        <button onclick="fetchJSON()">Fetch JSON data</button>
+        <button onclick="toggleTooltip()" id="toggleTooltip" value ="NO">Toggle Tooltip</button> -->
+        <!-- <input type="button" id="toggleTooltip" value="NO" onclick="toggleTooltip();"> -->
+        <button id="connectAPI">Connect To API</button>
+        <button id="disconnectAPI">Disconnect from API</button>
+    </div>
+<br><br><br><br><br><br><br><br>
+    
+    <div class ="average-energy-chart-container">
+        <div style ="padding:4px; font-family:sans-serif; font-size:18px; ">Average Energy Usage</div>
+        <span class="avgEnergy">average energy</span>
+        <canvas id="avgEnergyChart"></canvas>
+
+        <label for="inputEnergyDate" class="energyDateLabel">Date</label>
+        <input type="date" id="inputEnergyDate" class="inputEnergyDate">
+        <!-- <label for="inputEnergyValue">Set energy value</label> -->
+        <button id="buttonTotalEnergy">Set energy value</button>
+        <input type="text" id="inputEnergyValue" class="inputEnergyValue">
+
+    </div>
+
+</body>
+</html>
